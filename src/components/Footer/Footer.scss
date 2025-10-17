@@ -1,0 +1,40 @@
+.footer {
+  background-color: #03050f;
+
+  &__container {
+    max-width: 72rem; // max-w-6xl
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; // gap-2
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 1rem; // py-8 px-4
+
+    @media (min-width: 768px) {
+      flex-direction: row; // md:flex-row
+    }
+  }
+
+  &__logo {
+    width: 85px;
+  }
+
+  &__divider {
+    width: 100%;
+    height: 1px;
+    background-color: #2b304e;
+    margin: 16px 0;
+    display: block;
+
+    @media (min-width: 768px) {
+      display: none; // md:hidden
+    }
+  }
+
+  &__text {
+    color: #e5e7eb; // text-gray-200
+    font-size: 0.875rem; // text-sm
+    text-align: center;
+  }
+}
