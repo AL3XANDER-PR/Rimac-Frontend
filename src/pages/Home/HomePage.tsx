@@ -106,6 +106,7 @@ const HomePage = () => {
                 className="home__form-box"
               >
                 <SelectField
+                  selectName="documentType"
                   name="documentNumber"
                   control={control}
                   error={errors.documentNumber?.message}

@@ -1,5 +1,6 @@
 import {
   Controller,
+  useWatch,
   type Control,
   type FieldValues,
   type Path,
@@ -15,6 +16,7 @@ interface Option {
 
 interface SelectFieldProps<T extends FieldValues> {
   name: Path<T>;
+  selectName: Path<T>;
   label?: string;
   control: Control<T>;
   options: Option[];
@@ -23,21 +25,45 @@ interface SelectFieldProps<T extends FieldValues> {
 
 export const SelectField = <T extends FieldValues>({
   name,
+  selectName,
   control,
   options,
   error,
 }: SelectFieldProps<T>) => {
+  const documentType = useWatch({
+    control,
+    name: selectName,
+  });
+
+  // 📄 Define el formato dinámico según el tipo de documento
+  const getFormat = () => {
+    switch (documentType) {
+      case "RUC":
+        return "###########"; // 11 dígitos
+      case "DNI":
+        return "########"; // 8 dígitos
+      default:
+        return "########"; // valor por defecto
+    }
+  };
+
   return (
     <div className={`select-field ${error ? "has-error" : ""}`}>
       <div className={`select-field__container `}>
         <div className="select-field__select-wrapper">
-          <select className="select-field__select">
-            {options.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
+          <Controller
+            name={selectName}
+            control={control}
+            render={({ field }) => (
+              <select className="select-field__select" {...field}>
+                {options.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +83,7 @@ export const SelectField = <T extends FieldValues>({
               <PatternFormat
                 {...field}
                 id={name}
-                format="########"
+                format={getFormat()}
                 mask=""
                 placeholder=" "
                 className="select-field__input peer"

@@ -73,7 +73,7 @@ export const InputNumber = <T extends FieldValues>({
               format="#########"
               mask=""
               placeholder=" "
-              className="input-number__field font-br-sonoma-bold  peer"
+              className="input-number__field peer"
               onValueChange={(values) => field.onChange(values.value)}
             />
           )}
