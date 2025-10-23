@@ -1,9 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.css";
 
-import IcHomeLight from "../assets/IcHomeLight.svg";
-import IcHospitalLight from "../assets/IcHospitalLight.svg";
-import IcProtectionLight from "../assets/IcHomeLight.svg";
+import IcHomeLight from "../assets/icons/IcHomeLight.svg";
+import IcHospitalLight from "../assets/icons/IcHospitalLight.svg";
+import IcProtectionLight from "../assets/icons/IcHomeLight.svg";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { useState } from "react";

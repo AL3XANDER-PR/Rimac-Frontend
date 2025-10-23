@@ -1,4 +1,4 @@
-import RimacLogo from "../../assets/logo.svg";
+import RimacLogo from "../../assets/logos/logo.svg";
 import "./Header.scss";
 
 const Header = () => {

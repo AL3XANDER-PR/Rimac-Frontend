@@ -1,4 +1,4 @@
-import LogoRimacWhite from "../../assets/logo-white.svg";
+import LogoRimacWhite from "../../assets/logos/logo-white.svg";
 import "./Footer.scss";
 
 const Footer = () => {

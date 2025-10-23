@@ -1,4 +1,4 @@
-import hero from "../../assets/hero.webp";
+import hero from "../../assets/images/hero.webp";
 
 import { useForm } from "react-hook-form";
 import { usePlanStore } from "../../store/plan.store";

@@ -1,6 +1,6 @@
 import Stepper from "../../components/Stepper";
 
-import IcUsers from "../../assets/IcUsers.svg";
+import IcUsers from "../../assets/icons/IcUsers.svg";
 import { usePlanStore } from "../../store/plan.store";
 import { Link, Navigate } from "react-router-dom";
 

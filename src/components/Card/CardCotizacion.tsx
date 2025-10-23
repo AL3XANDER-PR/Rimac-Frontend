@@ -1,5 +1,5 @@
-import IcProtectionLight from "../../assets/IcProtectionLight.svg";
-import IcAddUserLight from "../../assets/IcAddUserLight.svg";
+import IcProtectionLight from "../../assets/icons/IcProtectionLight.svg";
+import IcAddUserLight from "../../assets/icons/IcAddUserLight.svg";
 
 interface Props {
   handleOptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

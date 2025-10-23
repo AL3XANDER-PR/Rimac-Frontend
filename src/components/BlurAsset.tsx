@@ -1,7 +1,7 @@
-import blurAsset from "../assets/blur-asset.png";
-import blurAsset1 from "../assets/blur-asset1.png";
-import blurAssetLeft from "../assets/blur-asset-left.png";
-import blurAssetLeft2 from "../assets/blur-asset-left2.png";
+import blurAsset from "../assets/images/blur-asset.png";
+import blurAsset1 from "../assets/images/blur-asset1.png";
+import blurAssetLeft from "../assets/images/blur-asset-left.png";
+import blurAssetLeft2 from "../assets/images/blur-asset-left2.png";
 
 export const BlurAsset = () => {
   return (
