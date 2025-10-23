@@ -1,0 +1,47 @@
+.blur-asset {
+  img {
+    position: absolute;
+    z-index: -10;
+    user-select: none;
+  }
+
+  &__right-desktop {
+    right: 0;
+    top: 0;
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+
+  &__right-mobile {
+    right: 0;
+    top: -5rem;
+    display: block;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__left-desktop {
+    left: 0;
+    bottom: 0;
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+
+  &__left-mobile {
+    left: 0;
+    bottom: 0;
+    display: block;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+}

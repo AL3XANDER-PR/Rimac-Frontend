@@ -5,6 +5,8 @@ import {
   type Path,
 } from "react-hook-form";
 
+import "./InputCheck.scss";
+
 interface CheckboxFieldProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
@@ -20,9 +22,7 @@ export const CheckboxField = <T extends FieldValues>({
 }: CheckboxFieldProps<T>) => {
   return (
     <label
-      className={`relative flex items-center gap-3 cursor-pointer mt-4 ${
-        error ? "text-red-500" : "text-gray-700"
-      }`}
+      className={`checkbox-field  ${error ? "checkbox-field--error" : ""}`}
     >
       <Controller
         name={name}
@@ -32,21 +32,17 @@ export const CheckboxField = <T extends FieldValues>({
             type="checkbox"
             checked={!!field.value}
             onChange={(e) => field.onChange(e.target.checked)}
-            className="sr-only peer"
+            className="checkbox-field__input"
           />
         )}
       />
 
-      <div
-        className={`w-5 h-5 border ${
-          error ? "border-red-500" : "border-gray-400"
-        } rounded-sm flex items-center justify-center peer-checked:bg-black`}
-      >
+      <div className={`checkbox-field__box ${error ? "error" : ""}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="white"
-          className="w-3 h-3 peer-checked:opacity-0 opacity-100 transition "
+          className="checkbox-field__icon"
         >
           <path
             fillRule="evenodd"
@@ -56,13 +52,9 @@ export const CheckboxField = <T extends FieldValues>({
         </svg>
       </div>
 
-      <span className="font-br-sonoma-medium">{label}</span>
-
-      {/* {error && (
-        <p className="text-red-500 text-xs absolute top-full left-0 mt-1">
-          {error}
-        </p>
-      )} */}
+      <span className="checkbox-field__label font-br-sonoma-medium">
+        {label}
+      </span>
     </label>
   );
 };

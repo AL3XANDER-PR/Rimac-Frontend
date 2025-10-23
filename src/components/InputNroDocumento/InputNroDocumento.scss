@@ -1,0 +1,110 @@
+.select-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 16px;
+    color: #4b5563;
+  }
+
+  // ---- SELECT ----
+  &__select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #9ca3af;
+    border-right: none;
+    background: #fff;
+    border-radius: 0.5rem 0 0 0.5rem;
+    height: 56px;
+  }
+
+  &__select {
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    height: 100%;
+    padding: 0 2.5rem 0 1rem;
+    outline: none;
+    min-width: 140px;
+    border: none;
+    font-family: inherit;
+    font-size: 16px;
+    color: inherit;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 1rem;
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+    pointer-events: none;
+  }
+
+  // ---- INPUT ----
+  &__input-wrapper {
+    position: relative;
+    flex: 1;
+    border: 1px solid #9ca3af;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: #fff;
+    height: 56px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    padding: 1.25rem 1rem 0.25rem;
+    font-size: 16px;
+    color: #1f2937;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 0.5rem;
+    // font-family: var(--font-regular, sans-serif);
+  }
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 1rem;
+    // font-family: var(--font-medium, sans-serif);
+    transition: all 0.2s ease;
+    pointer-events: none;
+
+    // Estados con el pseudo `peer`
+    .peer:focus ~ &,
+    .peer:not(:placeholder-shown) ~ & {
+      top: 0.75rem;
+      font-size: 0.75rem;
+      color: #374151;
+    }
+  }
+
+  // ---- ERROR ----
+  &__error {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  // ---- ESTADO ERROR ----
+  &.has-error {
+    .select-field__select-wrapper,
+    .select-field__input-wrapper {
+      border-color: #ef4444;
+    }
+
+    .select-field__field-label {
+      color: #ef4444;
+    }
+  }
+}
