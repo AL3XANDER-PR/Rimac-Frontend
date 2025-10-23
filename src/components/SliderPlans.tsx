@@ -4,10 +4,11 @@ import "swiper/swiper.css";
 import IcHomeLight from "../assets/IcHomeLight.svg";
 import IcHospitalLight from "../assets/IcHospitalLight.svg";
 import IcProtectionLight from "../assets/IcHomeLight.svg";
-import { usePlanStore, type Plan } from "../store/plan.store";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { useState } from "react";
+import type { Plan } from "../types/types";
+import { usePlanStore } from "../store/plan.store";
 
 const icons = [IcHomeLight, IcHospitalLight, IcProtectionLight];
 
@@ -23,15 +24,27 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
   };
 
   return (
-    <div className="">
-      <div className="block md:hidden">
+    <>
+      <div className="block">
         <Swiper
-          spaceBetween={16}
-          slidesPerView={1.1} // valor por defecto (movil)
+          autoHeight={false}
+          spaceBetween={20}
+          slidesPerView={1} // valor por defecto (movil)
           breakpoints={{
-            766: {
-              slidesPerView: 3, // cuando la pantalla sea >= 768px
+            640: {
+              // sm
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            768: {
+              // md
+              slidesPerView: 2,
               spaceBetween: 24,
+            },
+            1024: {
+              // lg
+              slidesPerView: 3,
+              spaceBetween: 28,
             },
           }}
           navigation={{
@@ -44,20 +57,20 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
           className=""
         >
           {plans.map((plan, index) => (
-            <SwiperSlide key={index} className=" ">
-              <div className=" w-full pt-[68px] pb-[51px] px-[32px] shadow-2xl rounded-[24px] flex flex-col relative transition-all opacity-100 duration-500  flex-1">
+            <SwiperSlide key={index} className="">
+              <div className="w-full h-full pt-16 pb-8 px-8 md:px-7  shadow-2xl rounded-[24px] flex flex-col relative transition-all opacity-100 duration-500">
                 {index === 1 && (
-                  <div className="recommended absolute top-10 text-xs text-[#141938] bg-[#7DF0BA] py-0.5 px-2 rounded-md font-black tracking-[.4px]">
+                  <div className="recommended absolute top-10 text-xs text-[#141938] bg-[#7DF0BA] py-0.5 px-2 rounded-md font-bold tracking-[.4px]">
                     Plan recomendado
                   </div>
                 )}
 
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between gap-5">
                   <div>
-                    <div className="text-2xl font-black tracking-[-.2px] text-[#141938]">
+                    <div className="text-2xl font-bold tracking-[-.2px] text-[#141938]">
                       {plan.name}
                     </div>
-                    <div className="mt-[24px] uppercase text-xs text-[#7981B2] tracking-[.6px] font-black">
+                    <div className="mt-[24px] uppercase text-xs text-[#7981B2] tracking-[.6px] font-bold">
                       Costo del plan
                     </div>
                     {plan.precioAnterior && (
@@ -65,27 +78,27 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
                         ${plan.precioAnterior} antes
                       </div>
                     )}
-                    <div className="mt-1 text-xl font-black tracking-[-.2px] text-[#141938]">
+                    <div className="mt-1 text-xl font-bold tracking-[-.2px] text-[#141938]">
                       ${plan.price} al mes
                     </div>
                   </div>
                   <img alt={plan.name} src={icons[index]} />
                 </div>
                 <div className="w-full h-[1px] bg-[#D7DBF5] my-[24px]" />
-                <ul className="mb-10 flex flex-col gap-[24px] ">
+
+                <ul className="mb-10 flex flex-col gap-[24px]">
                   {plan.description.map((item) => (
                     <li
                       key={item}
-                      className="list-disc ml-[18px] text-[16px] leading-7 tracking-[.1px] text-[#141938]"
+                      className="list-disc ml-[18px] text-[16px] leading-7 font-sans tracking-[.1px] text-[#141938]"
                     >
                       {item}
                     </li>
                   ))}
                 </ul>
-
                 <button
                   onClick={seleccionarPLan(plan)}
-                  className="flex items-center justify-center btn mt-auto w-full font-bold bg-[#FF1C44] border-[#FF1C44] hover:bg-[#c70233] hover:border-[#e60039] py-3.5 px-11 rounded-full text-white"
+                  className="flex items-center justify-center text-sm md:text-base mt-auto w-full font-bold bg-[#FF1C44] border-[#FF1C44] hover:bg-[#c70233] hover:border-[#e60039] py-3.5 md:px-11 rounded-full text-white"
                 >
                   Seleccionar Plan
                 </button>
@@ -95,7 +108,7 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
         </Swiper>
 
         {/* Controles personalizados */}
-        <div className="flex justify-center items-center gap-4 mt-4">
+        <div className=" flex lg:hidden justify-center items-center gap-4 mt-2">
           <button className="prev-btn border-2 border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-gray-500 hover:border-[#4F4FFF] hover:text-[#4F4FFF] transition">
             ‹
           </button>
@@ -107,61 +120,7 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
           </button>
         </div>
       </div>
-
-      {/* plans estaticas solo visibles en desktop */}
-      <div className="hidden sm:grid-cols-2 md:grid lg:grid-cols-3 gap-6">
-        {plans.map((plan, index) => (
-          <div
-            key={index}
-            className="w-[288px] min-w-[288px] pt-[68px] pb-[51px] px-[32px] shadow-[0_1px_24px_0_rgba(174,172,243,.251)] rounded-[24px] flex flex-col relative transition-all opacity-100 duration-500  flex-1"
-          >
-            {index === 1 && (
-              <div className="recommended absolute top-10 text-xs text-[#141938] bg-[#7DF0BA] py-0.5 px-2 rounded-md font-black tracking-[.4px]">
-                Plan recomendado
-              </div>
-            )}
-
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="text-2xl font-black tracking-[-.2px] text-[#141938]">
-                  {plan.name}
-                </div>
-                <div className="mt-[24px] uppercase text-xs text-[#7981B2] tracking-[.6px] font-black">
-                  Costo del plan
-                </div>
-                {plan.precioAnterior && (
-                  <div className="text-sm text-[#7981B2] tracking-[-.2px] mt-1 line-through">
-                    ${plan.precioAnterior} antes
-                  </div>
-                )}
-                <div className="mt-1 text-xl font-black tracking-[-.2px] text-[#141938]">
-                  ${plan.price} al mes
-                </div>
-              </div>
-              <img alt={plan.name} src={icons[index]} />
-            </div>
-            <div className="w-full h-[1px] bg-[#D7DBF5] my-[24px]" />
-            <ul className="mb-10 flex flex-col gap-[24px] ">
-              {plan.description.map((item) => (
-                <li
-                  key={item}
-                  className="list-disc ml-[18px] text-[14px] font-medium leading-7 tracking-[.1px] text-[#141938]"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            <button
-              onClick={seleccionarPLan(plan)}
-              className="flex items-center justify-center btn mt-auto w-full font-bold bg-[#FF1C44] border-[#FF1C44] hover:bg-[#c70233] hover:border-[#e60039] py-3.5 px-11 rounded-full text-white"
-            >
-              Seleccionar Plan
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 export default SliderPlans;

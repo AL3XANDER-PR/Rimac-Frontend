@@ -1,55 +1,23 @@
-import IcProtectionLight from "../../assets/IcProtectionLight.svg";
-import IcAddUserLight from "../../assets/IcAddUserLight.svg";
 import Stepper from "../../components/Stepper";
 import { useState } from "react";
 import SliderPlans from "../../components/SliderPlans";
-import { usePlanStore, type Plan } from "../../store/plan.store";
+import { usePlanStore } from "../../store/plan.store";
 import { calculateAge } from "../../utils/calcAge";
 import { Navigate, useNavigate } from "react-router-dom";
+import CardCotizacion from "../../components/Card/CardCotizacion";
+import { useGetPlans } from "../../hooks/useGetPlans";
 
 const PlansPage = () => {
   const navigate = useNavigate();
   const user = usePlanStore((state) => state.user);
   const logout = usePlanStore((state) => state.logout);
 
-  const [plans, setPlans] = useState<Plan[]>([]);
-  // const [tipoPlan, setTipoPlan] = useState("");
   const [edad] = useState(calculateAge(user?.birthDay || ""));
+  const { plans, getPlans, isLoading } = useGetPlans();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = event.target.value;
-    // setTipoPlan(selectedValue);
-
-    fetch("https://rimac-front-end-challenge.netlify.app/api/plans.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error HTTP: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const filteredData =
-          selectedValue === "paraMi"
-            ? data.list.filter((plan: Plan) => plan.age > edad)
-            : data.list
-                .filter((plan: Plan) => plan.age > edad)
-                .map((plan: Plan) => {
-                  const precioAnterior = plan.price;
-                  const precioConDescuento = +(plan.price * 0.95).toFixed(2); // -5%
-
-                  return {
-                    ...plan,
-                    precioAnterior,
-                    price: precioConDescuento,
-                  };
-                });
-
-        setPlans(filteredData);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los planes:", error);
-        setPlans([]);
-      });
+    getPlans({ edad, selectedValue });
   };
 
   if (!user) {
@@ -60,11 +28,11 @@ const PlansPage = () => {
     <>
       <Stepper path="/" />
 
-      <div className="py-5 md:py-10 ">
-        <div className="max-w-5xl mx-auto flex flex-col px-5  md:px-10 ">
+      <div className="py-8 md:py-10">
+        <div className="max-w-5xl mx-auto flex flex-col px-5  md:px-10">
           <button
             type="button"
-            className="md:inline-flex items-center hide-for-mobile hover:underline decoration-[#4F4FFF] hidden"
+            className="hidden md:flex items-center justify-start hover:underline decoration-[#4F4FFF]  w-0 bg-red-500 cursor-pointer mb-6"
             onClick={() => {
               logout();
               navigate("/", { replace: true });
@@ -94,98 +62,17 @@ const PlansPage = () => {
 
           <div className="">
             <div className="w-full md:w-8/12  mx-auto text-start md:text-center">
-              <h2 className="font-medium md:font-semibold  text-3xl  md:text-[40px] tracking-[-.6px] leading-[48px]">
+              <h2 className="font-bold text-[28px] md:text-[40px] tracking-[-.6px] leading-[36px] md:leading-[48px]">
                 {user?.name} ¿Para quién deseas cotizar?
               </h2>
-              <h3 className="text-base tracking-[.1px] leading-7 text-[#141938] mt-[8px]">
+              <h3 className="text-base tracking-[.1px] leading-7 text-[#141938] mt-[8px] font-sans">
                 Selecciona la opción que se ajuste más a tus necesidades.
               </h3>
             </div>
           </div>
 
-          <ul className="grid mx-auto w-full md:max-w-[544px] grid-cols-1 md:grid-cols-2  gap-8 mt-8 mb-10">
-            <li className="relative">
-              <input
-                type="radio"
-                id="paraMi"
-                name="hosting"
-                value="paraMi"
-                className="hidden peer"
-                required
-                onChange={handleOptionChange}
-              />
-              <div className=" absolute top-5 right-5 flex self-end items-center justify-center w-6 h-6 rounded-full border border-gray-300 peer-checked:border-[#389E0D] peer-checked:bg-[#389E0D] text-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-3.5 h-3.5 "
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </div>
-              <label
-                htmlFor="paraMi"
-                className="inline-flex items-center justify-between w-full text-gray-500  border-gray-200  peer-checked:border-gray-900   cursor-pointer rounded-3xl  p-6 transition-all duration-300 shadow-[0_1px_32px_#aeacf359] border-2 pt-10 h-full"
-              >
-                <div className="flex flex-col items-start ">
-                  <img className="select-none" alt="" src={IcProtectionLight} />
-                  <div className="text-xl font-black tracking-[-.2px] text-[#141938] mt-[8px]">
-                    Para mí
-                  </div>
-                  <div className="text-[12px] leading-5 tracking-[.2px] mt-[8px]">
-                    Cotiza tu seguro de salud y agrega familiares si así lo
-                    deseas.
-                  </div>
-                </div>
-              </label>
-            </li>
-            <li className="relative">
-              <input
-                type="radio"
-                id="paraAlguienMas"
-                name="hosting"
-                value="paraAlguienMas"
-                className="hidden peer"
-                required
-                onChange={handleOptionChange}
-              />
-              <div className=" absolute top-5 right-5 flex self-end items-center justify-center w-6 h-6 rounded-full border border-gray-300 peer-checked:border-[#389E0D] peer-checked:bg-[#389E0D] text-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-3.5 h-3.5 "
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </div>
-              <label
-                htmlFor="paraAlguienMas"
-                className="inline-flex items-center justify-between w-full text-gray-500  border-gray-200  peer-checked:border-gray-900   cursor-pointer rounded-3xl  p-6 transition-all duration-300 shadow-[0_1px_32px_#aeacf359] border-2 pt-10 h-full"
-              >
-                <div className="flex flex-col items-start ">
-                  <img className="select-none" alt="" src={IcAddUserLight} />
-                  <div className="text-xl font-black tracking-[-.2px] text-[#141938] mt-[8px]">
-                    Para alguien más
-                  </div>
-                  <div className="text-[12px] leading-5 tracking-[.2px] mt-[8px]">
-                    Realiza una cotización para uno de tus familiares o
-                    cualquier persona.
-                  </div>
-                </div>
-              </label>
-            </li>
-          </ul>
-
+          <CardCotizacion handleOptionChange={handleOptionChange} />
+          {isLoading && <p>Cargando planes...</p>}
           {plans.length > 0 && <SliderPlans plans={plans} />}
         </div>
       </div>

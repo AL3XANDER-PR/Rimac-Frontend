@@ -4,14 +4,17 @@ import { usePlanStore } from "../store/plan.store";
 interface Props {
   completed?: boolean;
   path?: string;
+  className?: string;
 }
 
-function Stepper({ completed = false, path }: Props) {
+function Stepper({ completed = false, path, className }: Props) {
   const navigate = useNavigate();
   const logout = usePlanStore((state) => state.logout);
 
   return (
-    <div className=" bg-[#EDEFFC] h-14 z-10 sticky top-0 w-full flex">
+    <div
+      className={`${className} bg-[#EDEFFC] h-14 z-10 sticky top-0 w-full flex `}
+    >
       <div className="max-w-6xl mx-auto w-full flex justify-center px-6">
         <div className="flex w-full items-center justify-center">
           <div className="md:flex justify-center items-center  hidden ">
@@ -88,7 +91,7 @@ function Stepper({ completed = false, path }: Props) {
               </svg>
             </button>
             <div className="flex items-center ml-[16px] w-full">
-              <div className="text-[10px] tracking-[.8px] leading-4 mr-[16px] font-black whitespace-nowrap">
+              <div className="text-[10px] tracking-[.8px] leading-4 mr-[16px] font-bold whitespace-nowrap">
                 PASO 1 DE 2
               </div>
               <div className="w-full h-1.5 rounded-3xl bg-[#D7DBF5]">

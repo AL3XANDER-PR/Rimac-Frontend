@@ -14,13 +14,13 @@ function SummaryPage() {
 
   return (
     <>
-      <Stepper completed={true} path="/plans" />
+      <Stepper completed={true} path="/plans" className="hidden md:block" />
 
       <div className="py-5 md:py-10 ">
         <div className="max-w-5xl mx-auto flex flex-col px-5  md:px-10 ">
           <Link
             to="/plans"
-            className="md:inline-flex items-center hide-for-mobile hover:underline decoration-[#4F4FFF] hidden "
+            className="md:inline-flex items-center hover:underline decoration-[#4F4FFF] hidden "
           >
             <div className="border-2 border-[#4F4FFF] rounded-full w-[20px] min-w-[20px] h-[20px] grid place-content-center text-[8px] text-[#4F4FFF]">
               <svg
@@ -44,23 +44,23 @@ function SummaryPage() {
             </div>
           </Link>
 
-          <div className="content__info mt-8 mb-8 text-center md:text-start">
-            <h2 className="font-bold text-3xl md:text-[40px] tracking-[-.6px] leading-[48px] ">
+          <div className="mt-8 mb-8 text-center md:text-start">
+            <h2 className="font-bold text-[32px]  md:text-[40px] tracking-[-.6px] leading-[48px] ">
               Resumen del seguro
             </h2>
           </div>
-          <div className="content__block py-[24px] px-[32px] shadow-[0_1px_24px_0_rgba(174,172,243,.251)] rounded-[24px]">
-            <div className="uppercase text-[#141938] text-[10px] leading-[16px] tracking-[.8px] font-black">
+          <div className="py-[24px] px-[32px] shadow-[0_1px_24px_0_rgba(174,172,243,.251)] rounded-[24px]">
+            <div className="uppercase text-[#141938] text-[10px] leading-[16px] tracking-[.8px] font-bold">
               Precios calculados para:
             </div>
             <div className="flex items-center gap-[12px] mt-[8px]">
               <img alt="" src={IcUsers} />
-              <div className="text-xl font-black tracking-[-.2px] text-[#141938]">
+              <div className="text-xl font-bold tracking-[-.2px] text-[#141938]">
                 {user?.name} {user?.lastName}
               </div>
             </div>
             <div className="w-full h-[1px] bg-[#D7DBF5] my-[16px]" />
-            <div className="text-base font-black tracking-[.2px] text-[#141938] mt-[8px]">
+            <div className="text-base font-bold tracking-[.2px] text-[#141938] mt-[8px]">
               Responsable de pago
             </div>
             <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">
@@ -69,7 +69,7 @@ function SummaryPage() {
             <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">
               Celular: {user?.celular}
             </div>
-            <div className="text-base font-black tracking-[.2px] text-[#141938] mt-[16px]">
+            <div className="text-base font-bold tracking-[.2px] text-[#141938] mt-[16px]">
               Plan elegido
             </div>
             <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">

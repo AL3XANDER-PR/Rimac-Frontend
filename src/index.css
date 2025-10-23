@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
-@font-face {
+/* @import "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"; */
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+/* @import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"; */
+
+/* @font-face {
   font-family: "BR Sonoma";
   src: url("./assets/fonts/br-sonoma/BRSonoma-Light.otf") format("opentype");
   font-weight: 300;
@@ -19,10 +24,85 @@
   src: url("./assets/fonts/br-sonoma/BRSonoma-Bold.otf") format("opentype");
   font-weight: 700;
   font-display: swap;
+} */
+
+/* @layer base {
+  html {
+    font-family: "BR Sonoma", sans-serif;
+  }
+} */
+
+:root {
+  --br-sonoma-bold: br-sonoma-bold;
 }
 
-@layer base {
-  html {
-    font-family: "BR Sonoma";
-  }
+@font-face {
+  font-family: br-sonoma-bold;
+  src: url(./assets/fonts/br-sonoma/BRSonoma-Bold.otf) format("opentype");
+  font-display: swap;
+}
+
+.font-br-sonoma-bold {
+  font-family: br-sonoma-bold, sans-serif;
+}
+
+:root {
+  --br-sonoma-light: br-sonoma-light;
+}
+
+@font-face {
+  font-family: br-sonoma-light;
+  src: url(../fonts/br-sonoma/BRSonoma-Light.otf) format("opentype");
+  font-display: swap;
+}
+
+.font-br-sonoma-light {
+  font-family: br-sonoma-light, sans-serif;
+}
+
+:root {
+  --br-sonoma-medium: br-sonoma-medium;
+}
+
+@font-face {
+  font-family: br-sonoma-medium;
+  src: url(./assets/fonts/br-sonoma/BRSonoma-Medium.otf) format("opentype");
+  font-display: swap;
+}
+
+.font-br-sonoma-medium {
+  font-family: br-sonoma-medium, sans-serif;
+}
+
+:root {
+  --br-sonoma-regular: br-sonoma-regular;
+}
+
+@font-face {
+  font-family: br-sonoma-regular;
+  src: url(../fonts/br-sonoma/BRSonoma-Regular.otf) format("opentype");
+  font-display: swap;
+}
+
+.font-br-sonoma-regular {
+  font-family: br-sonoma-regular, sans-serif;
+}
+
+:root {
+  --font-lato: "Lato", sans-serif;
+  --font-reboto: "Roboto", sans-serif;
+  /* --br-sonoma-black: br-sonoma-black */
+}
+
+* {
+  font-family: var(--font-lato);
+}
+
+.swiper-slide {
+  height: auto !important;
+  /* background: #000; */
+}
+
+.swiper {
+  padding: 0 10px 25px 10px !important;
 }
