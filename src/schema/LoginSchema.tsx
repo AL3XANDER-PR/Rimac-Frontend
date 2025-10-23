@@ -5,8 +5,8 @@ export const LoginSchema = z
     documentType: z.string(),
     documentNumber: z
       .string()
-      .nonempty("El número de Documento es obligatorio")
-      .min(8, "El número de Documento debe tener 8 dígitos"),
+      .nonempty("El número de Documento es obligatorio"),
+    // .min(8, "El número de Documento debe tener 8 dígitos"),
     nroCelular: z
       .string()
       .nonempty("El número de Celular es obligatorio")
@@ -18,21 +18,22 @@ export const LoginSchema = z
       message: "Debes aceptar los términos y condiciones",
     }),
   })
-  .refine(
-    (data) => {
-      if (data.documentType === "DNI") {
-        return data.documentNumber.length === 8;
-      }
-      if (data.documentType === "RUC") {
-        return data.documentNumber.length === 11;
-      }
-      return true;
-    },
-    {
-      message:
-        "El número de Documento debe tener 8 dígitos si es DNI o 11 si es RUC",
-      path: ["documentNumber"],
+  .superRefine((data, ctx) => {
+    if (data.documentType === "DNI" && data.documentNumber.length !== 8) {
+      ctx.addIssue({
+        path: ["documentNumber"],
+        message: "El número de Documento debe tener 8 dígitos si es DNI",
+        code: z.ZodIssueCode.custom,
+      });
     }
-  );
+
+    if (data.documentType === "RUC" && data.documentNumber.length !== 11) {
+      ctx.addIssue({
+        path: ["documentNumber"],
+        message: "El número de Documento debe tener 11 dígitos si es RUC",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
 
 export type FormData = z.infer<typeof LoginSchema>;

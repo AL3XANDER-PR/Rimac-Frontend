@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Controller,
   useWatch,
@@ -19,6 +20,7 @@ interface SelectFieldProps<T extends FieldValues> {
   selectName: Path<T>;
   label?: string;
   control: Control<T>;
+  setValue: (name: Path<T>, value: any) => void;
   options: Option[];
   error?: string;
 }
@@ -27,6 +29,7 @@ export const SelectField = <T extends FieldValues>({
   name,
   selectName,
   control,
+  setValue,
   options,
   error,
 }: SelectFieldProps<T>) => {
@@ -55,7 +58,14 @@ export const SelectField = <T extends FieldValues>({
             name={selectName}
             control={control}
             render={({ field }) => (
-              <select className="select-field__select" {...field}>
+              <select
+                className="select-field__select"
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e); // actualiza el tipo
+                  setValue(name, ""); // vacía el número de documento
+                }}
+              >
                 {options.map((opt) => (
                   <option key={opt.value} value={opt.value}>
                     {opt.label}

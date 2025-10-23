@@ -28,6 +28,7 @@ const HomePage = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(LoginSchema),
@@ -114,6 +115,7 @@ const HomePage = () => {
                     { label: "DNI", value: "DNI" },
                     { label: "RUC", value: "RUC" },
                   ]}
+                  setValue={setValue}
                 />
 
                 <InputNumber
