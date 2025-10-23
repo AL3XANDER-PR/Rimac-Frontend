@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { usePlanStore } from "../store/plan.store";
+// import { usePlanStore } from "../store/plan.store";
+import { usePlanContext } from "../context/PlanContext";
 
 interface Props {
   completed?: boolean;
@@ -9,7 +10,12 @@ interface Props {
 
 function Stepper({ completed = false, path, className }: Props) {
   const navigate = useNavigate();
-  const logout = usePlanStore((state) => state.logout);
+
+  // Zustand
+  // const logout = usePlanStore((state) => state.logout);
+
+  // Context API
+  const { logout } = usePlanContext();
 
   return (
     <div

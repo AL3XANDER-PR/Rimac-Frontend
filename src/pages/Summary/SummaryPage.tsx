@@ -5,6 +5,8 @@ import IcUsers from "../../assets/icons/IcUsers.svg";
 import { Link, Navigate } from "react-router-dom";
 import { usePlanContext } from "../../context/PlanContext";
 
+import "./SummaryPage.scss";
+
 function SummaryPage() {
   // Estadp con zustand
   // const user = usePlanStore((state) => state.user);
@@ -21,69 +23,60 @@ function SummaryPage() {
 
   return (
     <>
-      <Stepper completed={true} path="/plans" className="hidden md:block" />
+      <Stepper completed={true} path="/plans" className="summary__stepper" />
 
-      <div className="py-5 md:py-10 ">
-        <div className="max-w-5xl mx-auto flex flex-col px-5  md:px-10 ">
-          <Link
-            to="/plans"
-            className="md:inline-flex items-center hover:underline decoration-[#4F4FFF] hidden "
-          >
-            <div className="border-2 border-[#4F4FFF] rounded-full w-[20px] min-w-[20px] h-[20px] grid place-content-center text-[8px] text-[#4F4FFF]">
+      <div className="summary">
+        <div className="summary__container">
+          <Link to="/plans" className="summary__back">
+            <div className="summary__back-icon">
               <svg
                 aria-hidden="true"
                 focusable={false}
                 data-prefix="fas"
                 data-icon="chevron-left"
-                className="w-2.5 h-2.5 stroke-[#4F4FFF]"
+                className="summary__chevron"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
               >
                 <path
                   fill="currentColor"
-                  d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                  d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192
+                     c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8
+                     0-45.3L77.3 256 246.6 86.6c12.5-12.5
+                     12.5-32.8 0-45.3s-32.8-12.5-45.3
+                     0l-192 192z"
                 />
               </svg>
             </div>
-            <div className="text-[#4F4FFF] text-lg font-bold ml-[8px]">
-              Volver
-            </div>
+            <div className="summary__back-text">Volver</div>
           </Link>
 
-          <div className="mt-8 mb-8 text-center md:text-start">
-            <h2 className="font-bold text-[32px]  md:text-[40px] tracking-[-.6px] leading-[48px] ">
-              Resumen del seguro
-            </h2>
+          <div className="summary__header">
+            <h2 className="summary__title">Resumen del seguro</h2>
           </div>
-          <div className="py-[24px] px-[32px] shadow-[0_1px_24px_0_rgba(174,172,243,.251)] rounded-[24px]">
-            <div className="uppercase text-[#141938] text-[10px] leading-[16px] tracking-[.8px] font-bold">
-              Precios calculados para:
-            </div>
-            <div className="flex items-center gap-[12px] mt-[8px]">
+
+          <div className="summary__card">
+            <div className="summary__label">Precios calculados para:</div>
+
+            <div className="summary__user">
               <img alt="" src={IcUsers} />
-              <div className="text-xl font-bold tracking-[-.2px] text-[#141938]">
+              <div className="summary__user-name">
                 {user?.name} {user?.lastName}
               </div>
             </div>
-            <div className="w-full h-[1px] bg-[#D7DBF5] my-[16px]" />
-            <div className="text-base font-bold tracking-[.2px] text-[#141938] mt-[8px]">
-              Responsable de pago
-            </div>
-            <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">
+
+            <div className="summary__divider" />
+
+            <div className="summary__section-title">Responsable de pago</div>
+            <div className="summary__text">
               {user?.documentType}: {user?.documentNumber}
             </div>
-            <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">
-              Celular: {user?.celular}
-            </div>
-            <div className="text-base font-bold tracking-[.2px] text-[#141938] mt-[16px]">
-              Plan elegido
-            </div>
-            <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">
-              {plan?.name}
-              {/* <pre>{JSON.stringify(plan, null, 2)}</pre> */}
-            </div>
-            <div className="text-[14px] leading-6 tracking-[.1px] mt-[4px] text-[#141938]">
+            <div className="summary__text">Celular: {user?.celular}</div>
+
+            <div className="summary__section-title">Plan elegido</div>
+            <div className="summary__text">{plan?.name}</div>
+            <div className="summary__text">
               Costo del Plan: ${plan?.price} al mes
             </div>
           </div>
