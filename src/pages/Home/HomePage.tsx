@@ -7,38 +7,13 @@ import Footer from "../../components/Footer/Footer";
 import { LoginButton } from "../../components/Button/LoginButton";
 import { BlurAsset } from "../../components/BlurAsset";
 import { InputNumber } from "../../components/InputNumber";
-import z from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckboxField } from "../../components/InputCheck";
 import { SelectField } from "../../components/InputNroDocumento";
-
-type FormValues = {
-  documentType: string;
-  documentNumber: string;
-  nroCelular: string;
-  acceptPrivacy: boolean;
-  acceptComms: boolean;
-};
-
-const schema = z.object({
-  documentType: z.string(),
-  documentNumber: z
-    .string()
-    .nonempty("El número de Documento es obligatorio")
-    .min(8, "El número de Documento debe tener 8 dígitos"),
-  nroCelular: z
-    .string()
-    .nonempty("El número de Celular es obligatorio")
-    .min(9, "El número de Celular debe tener 9 dígitos"),
-  acceptPrivacy: z.boolean().refine((val) => val === true, {
-    message: "Debes aceptar la política de privacidad",
-  }),
-  acceptComms: z.boolean().refine((val) => val === true, {
-    message: "Debes aceptar los términos y condiciones",
-  }),
-});
-
-type FormData = z.infer<typeof schema>;
+import { fetchUser } from "../../service/fetchUser";
+import type { FormValues } from "../../types/types";
+import { LoginSchema, type FormData } from "../../schema/LoginSchema";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -50,12 +25,10 @@ const HomePage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       documentType: "DNI",
-      // documentNumber: "30216147",
       documentNumber: "",
-      // nroCelular: "5130216147",
       nroCelular: "",
       acceptPrivacy: false,
       acceptComms: false,
@@ -64,10 +37,7 @@ const HomePage = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const res = await fetch(
-        "https://rimac-front-end-challenge.netlify.app/api/user.json"
-      );
-      const user = await res.json();
+      const user = await fetchUser();
 
       if (user) {
         setUser({

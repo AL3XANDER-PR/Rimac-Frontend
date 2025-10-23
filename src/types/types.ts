@@ -25,3 +25,11 @@ export interface PlanState {
   logout: () => void;
   setAuthenticated: (value: boolean) => void;
 }
+
+export type FormValues = {
+  documentType: string;
+  documentNumber: string;
+  nroCelular: string;
+  acceptPrivacy: boolean;
+  acceptComms: boolean;
+};
