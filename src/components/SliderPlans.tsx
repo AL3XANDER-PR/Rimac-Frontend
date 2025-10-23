@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { useState } from "react";
 import type { Plan } from "../types/types";
-import { usePlanStore } from "../store/plan.store";
+// import { usePlanStore } from "../store/plan.store";
+import { usePlanContext } from "../context/PlanContext";
 
 const icons = [IcHomeLight, IcHospitalLight, IcProtectionLight];
 
@@ -16,9 +17,12 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState<number>(1);
 
-  const setPlan = usePlanStore((state) => state.setPlan);
+  // zustand
+  // const setPlan = usePlanStore((state) => state.setPlan);
+
+  const { setPlan } = usePlanContext();
+
   const seleccionarPLan = (plan: Plan) => () => {
-    // console.log("Plan seleccionado:", plan);
     setPlan(plan);
     navigate("/summary");
   };
@@ -108,7 +112,7 @@ const SliderPlans = ({ plans }: { plans: Plan[] }) => {
         </Swiper>
 
         {/* Controles personalizados */}
-        <div className=" flex lg:hidden justify-center items-center gap-4 mt-2">
+        <div className="flex lg:hidden justify-center items-center gap-4 mt-2">
           <button className="prev-btn border-2 border-gray-300 rounded-full w-8 h-8 flex items-center justify-center text-gray-500 hover:border-[#4F4FFF] hover:text-[#4F4FFF] transition">
             ‹
           </button>

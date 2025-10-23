@@ -1,12 +1,19 @@
 import Stepper from "../../components/Stepper";
 
 import IcUsers from "../../assets/icons/IcUsers.svg";
-import { usePlanStore } from "../../store/plan.store";
+// import { usePlanStore } from "../../store/plan.store";
 import { Link, Navigate } from "react-router-dom";
+import { usePlanContext } from "../../context/PlanContext";
 
 function SummaryPage() {
-  const user = usePlanStore((state) => state.user);
-  const plan = usePlanStore((state) => state.plan);
+  // Estadp con zustand
+  // const user = usePlanStore((state) => state.user);
+  // const plan = usePlanStore((state) => state.plan);
+
+  // estados con context api
+  const {
+    state: { user, plan },
+  } = usePlanContext();
 
   if (!user || !plan) {
     return <Navigate to="/" />;

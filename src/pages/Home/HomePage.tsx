@@ -2,7 +2,7 @@ import hero from "../../assets/images/hero.webp";
 import "./HomePage.scss";
 
 import { useForm } from "react-hook-form";
-import { usePlanStore } from "../../store/plan.store";
+// import { usePlanStore } from "../../store/plan.store";
 import { Navigate, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import { LoginButton } from "../../components/Button/LoginButton";
@@ -14,11 +14,16 @@ import { SelectField } from "../../components/InputNroDocumento/InputNroDocument
 import { fetchUser } from "../../service/fetchUser";
 import type { FormValues } from "../../types/types";
 import { LoginSchema, type FormData } from "../../schema/LoginSchema";
+import { usePlanContext } from "../../context/PlanContext";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const setUser = usePlanStore((state) => state.setUser);
-  const user = usePlanStore((state) => state.user);
+  // Zustand
+  // const setUser = usePlanStore((state) => state.setUser);
+  // const user = usePlanStore((state) => state.user);
+
+  // Context API
+  const { state, setUser } = usePlanContext();
 
   const {
     control,
@@ -53,7 +58,7 @@ const HomePage = () => {
     }
   };
 
-  if (user) {
+  if (state.user) {
     return <Navigate to="/plans" />;
   }
 

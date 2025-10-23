@@ -1,26 +1,31 @@
 import Stepper from "../../components/Stepper";
 import { useState } from "react";
 import SliderPlans from "../../components/SliderPlans";
-import { usePlanStore } from "../../store/plan.store";
+// import { usePlanStore } from "../../store/plan.store";
 import { calculateAge } from "../../utils/calcAge";
 import { Navigate, useNavigate } from "react-router-dom";
 import CardCotizacion from "../../components/Card/CardCotizacion";
 import { useGetPlans } from "../../hooks/useGetPlans";
+import { usePlanContext } from "../../context/PlanContext";
+import { SkeletonPlans } from "../../components/skeleton/SkeletonPLans";
 
 const PlansPage = () => {
   const navigate = useNavigate();
-  const user = usePlanStore((state) => state.user);
-  const logout = usePlanStore((state) => state.logout);
+  // const user = usePlanStore((state) => state.user);
+  // const logout = usePlanStore((state) => state.logout);
+  const { state, logout } = usePlanContext();
 
-  const [edad] = useState(calculateAge(user?.birthDay || ""));
+  const [edad] = useState(calculateAge(state.user?.birthDay || ""));
   const { plans, getPlans, isLoading } = useGetPlans();
+  console.log("💻 - PlansPage - isLoading:", isLoading);
+  console.log("💻 - PlansPage - plans:", plans);
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = event.target.value;
     getPlans({ edad, selectedValue });
   };
 
-  if (!user) {
+  if (!state.user) {
     return <Navigate to="/" />;
   }
 
@@ -63,7 +68,7 @@ const PlansPage = () => {
           <div className="">
             <div className="w-full md:w-8/12  mx-auto text-start md:text-center">
               <h2 className="font-bold text-[28px] md:text-[40px] tracking-[-.6px] leading-[36px] md:leading-[48px]">
-                {user?.name} ¿Para quién deseas cotizar?
+                {state.user?.name} ¿Para quién deseas cotizar?
               </h2>
               <h3 className="text-base tracking-[.1px] leading-7 text-[#141938] mt-[8px] font-sans">
                 Selecciona la opción que se ajuste más a tus necesidades.
@@ -72,8 +77,10 @@ const PlansPage = () => {
           </div>
 
           <CardCotizacion handleOptionChange={handleOptionChange} />
-          {isLoading && <p>Cargando planes...</p>}
-          {plans.length > 0 && <SliderPlans plans={plans} />}
+          {isLoading ? <SkeletonPlans /> : null}
+          {plans.length > 0 && !isLoading ? (
+            <SliderPlans plans={plans} />
+          ) : null}
         </div>
       </div>
     </>

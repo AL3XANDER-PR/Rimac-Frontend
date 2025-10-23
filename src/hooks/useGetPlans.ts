@@ -17,6 +17,7 @@ export const useGetPlans = () => {
   }) => {
     setIsLoading(true);
     try {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula un retraso de 1 segundo
       const response = await fetchPlans();
       if (!response) {
         setPlans([]);
