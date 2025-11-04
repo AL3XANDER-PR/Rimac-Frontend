@@ -23,7 +23,7 @@ function SummaryPage() {
 
   return (
     <>
-      <Stepper completed={true} path="/plans" className="summary__stepper" />
+      <Stepper completed={true} path="/plans" />
 
       <div className="summary">
         <div className="summary__container">
